@@ -22,6 +22,13 @@ pub fn get_limit_offset_pairs(chunk_size: usize, absolute_limit: usize) -> Vec<L
     .collect()
 }
 
+pub fn for_page(page: usize, page_size: usize) -> LimitOffsetPair {
+    let offset = page * page_size;
+    let limit = offset + page_size;
+
+    LimitOffsetPair { limit, offset }
+}
+
 fn validate_chunk_size(chunk_size: usize, total: usize) -> bool {
     total % chunk_size == 0
 }
@@ -54,5 +61,23 @@ mod tests {
         let chnk_sz = 250;
         let limit = 1001;
         get_limit_offset_pairs(chnk_sz, limit);
+    }
+
+    #[test]
+    fn page_one() {
+        let p = 0;
+        let p_size = 10;
+        let res = for_page(p, p_size);
+        assert_eq!(res.limit, p_size);
+        assert_eq!(res.offset, 0);
+    }
+
+    #[test]
+    fn page_two() {
+        let p = 1;
+        let p_size = 10;
+        let res = for_page(p, p_size);
+        assert_eq!(res.limit, p_size * 2);
+        assert_eq!(res.offset, p_size);
     }
 }
