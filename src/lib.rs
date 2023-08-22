@@ -16,7 +16,7 @@ pub fn get_limit_offset_pairs(chunk_size: usize, absolute_limit: usize) -> Vec<L
 
     rng.map(|i| {
         let offset = i * chunk_size;
-        let limit = offset + chunk_size;
+        let limit = chunk_size;
         LimitOffsetPair { limit, offset }
     })
     .collect()
@@ -24,9 +24,8 @@ pub fn get_limit_offset_pairs(chunk_size: usize, absolute_limit: usize) -> Vec<L
 
 pub fn for_page(page: usize, page_size: usize) -> LimitOffsetPair {
     let offset = page * page_size;
-    let limit = offset + page_size;
 
-    LimitOffsetPair { limit, offset }
+    LimitOffsetPair { limit: page_size, offset }
 }
 
 fn validate_chunk_size(chunk_size: usize, total: usize) -> bool {
