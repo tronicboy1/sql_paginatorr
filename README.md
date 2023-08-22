@@ -9,3 +9,9 @@ The author takes no responsibility for any bugs that occur from the use of this 
 # License
 
 MIT
+
+# Usage
+
+```rust
+let LimitOffsetPair { limit, offset } = sql_paginatorr::for_page(3, 10); // 40, 30
+```
