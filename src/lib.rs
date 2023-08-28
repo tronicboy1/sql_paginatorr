@@ -8,11 +8,19 @@ pub struct LimitOffsetPair {
  * pagination.
  */
 pub fn get_limit_offset_pairs(chunk_size: usize, absolute_limit: usize) -> Vec<LimitOffsetPair> {
+    create_limit_offset_pairs_with_base(chunk_size, absolute_limit, 0)
+}
+
+pub fn create_limit_offset_pairs_with_base(
+    chunk_size: usize,
+    absolute_limit: usize,
+    start: usize,
+) -> Vec<LimitOffsetPair> {
     if !validate_chunk_size(chunk_size, absolute_limit) {
         panic!("Chunk size must leave no remainder!")
     }
 
-    let rng = 0..absolute_limit / chunk_size;
+    let rng = start..absolute_limit / chunk_size;
 
     rng.map(|i| {
         let offset = i * chunk_size;
@@ -25,7 +33,10 @@ pub fn get_limit_offset_pairs(chunk_size: usize, absolute_limit: usize) -> Vec<L
 pub fn for_page(page: usize, page_size: usize) -> LimitOffsetPair {
     let offset = page * page_size;
 
-    LimitOffsetPair { limit: page_size, offset }
+    LimitOffsetPair {
+        limit: page_size,
+        offset,
+    }
 }
 
 fn validate_chunk_size(chunk_size: usize, total: usize) -> bool {
