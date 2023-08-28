@@ -1,7 +1,7 @@
 [package]
 name = "sql_paginatorr"
 description = "A simple utility for calculating offset and limits for SQL Queries"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 authors = ["Austin John Mayer <tronicboy1>"]
 repository = "https://github.com/tronicboy1/sql_paginatorr"
